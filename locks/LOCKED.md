@@ -329,3 +329,11 @@ These lines are baked into this repo's own pastes. They come from pre-run 9's le
 ## Locked during pre-run 10
 
 When a fix works, append it here, one block per fix, in the form shown above: UTC time, what failed or worked, what was changed, why that change stays.
+
+```
+- 2026-11-12T07:53:38Z.
+- What worked: (x) the reshaped offers: HOLD-1, HOLD-2, HOLD-3 and RETURN met on their first three minutes on submit-OK, no repair; the rate fell to 1,013 at 07:39:12Z as HOLD-3 was scored; no over-capacity step was offered. (vi) five cohorts, one build: FEE_SPLIT verified on the submit rows. (viii) the candidate check passed at the open. (iv) the desk counter kept pace in every whole minute (DAA gap at most 3, sink age at most about 1.2 s). (xi) Mini's one-hop-per-transaction count matched the desk in 49 of 50 cohort cells in HOLD-1 to HOLD-4 (the one mismatch: floor at 07:28Z, desk 3, Mini 2); all 15 RETURN cells matched. The bot filed a legal NO SEND no-free-node. No FAILED file; the runner was not restarted.
+- What failed: nothing in the runner. Finding: in this run the cheap chained tiers were already slow at HOLD-1 1,013 tx/s (floor 20 hops in the three scored minutes against 373 in pre-run 9's HOLD-1; median 14.0 s against 1.6 s), so the 1,500 vs 1,800 comparison starts from that baseline. Floor did not return to pre-run 9's uncongested HOLD-1 rate in RETURN (15 hops, median 30.2 s).
+- What was changed: nothing in this run.
+- Why that change stays: (x) still dropped the rate after HOLD-3 and offered nothing over the band we had observed. (xi) the Mini hop fix held live in 49 of 50 cells and should be kept. A next repo that wants a clean 1,500 vs 1,800 reading would need a HOLD-1 where the cheap tiers land like they did in pre-run 9, or a recorded reason why they do not.
+```

@@ -38,3 +38,15 @@ Hop rates per hop, one builder: floor (families 1–4) 100 sompi/gram on the des
 - counts/desk/HOLD-4.md: 2026-11-12T07:44:22Z
 - counts/desk/RETURN.md: 2026-11-12T07:48:22Z
 - counts/chain/TIMELINE.md: 2026-11-12T07:53:33Z
+
+## Reading against the selection rule
+
+Added by the operator after the run; the runner's text above is unchanged. Figures are from the step files and [counts/chain/TIMELINE.md](../counts/chain/TIMELINE.md). The run sees no miner's template, so this is a fit to the rule as read in the source, not a measurement of it. These are observations from this run, not a claim about every TN10 miner.
+
+Rule, as cited above: rusty-kaspa v2.1.0 (01b532e8), `frontier.rs` `build_selector`; weight (fee/mass)^3 with `ALPHA = 3` in `selectors.rs`; only transactions with no parent in the mempool are in the frontier. Against payments at 150 sompi/gram the weights are 0.30 (floor, 100), 2.4 (double, 200), 8 (triple and triple-pub, 300) and 296 (high, 1000).
+
+- **HOLD-1 did not look like the take-all branch we saw in pre-run 9.** In pre-run 9, under capacity (HOLD-1, HOLD-4, RETURN) every cohort landed in 0.9–1.7 s and every OK hop landed. In this run, at the same 1,013 offer, landing already followed the weight order: high 1.1 s (402 hops), triple-pub 2.6 s, triple 2.8 s, double 7.7 s, floor 14.0 s (20 hops, and 16 of 20 landed). That is the shape we associated in pre-run 9 with a frontier that no longer fits in one block. Our own landed load at HOLD-1 was only about 64,000–65,000 non-coinbase a minute, well under the 110,000–132,000 band from pre-runs 8 and 9, so the fit, if it holds, points at transactions already waiting that we did not land in the "other traffic" column, not at the size of our own offer. That is a hypothesis, not a reading of a mempool or a template.
+- **At 1,500 and 1,800, landing stayed in the same weight order, and the cheap tiers slowed further.** High was barely touched (1.3 s median in HOLD-2, 1.5 s in HOLD-3; 92 and 82 percent of this run's HOLD-1 hop rate). Floor landed 0 of 1 OK hop in each of those steps. The gaps are again smaller than a pure 1/weight scaling of the extra wait, as in pre-run 9.
+- **Chained hops are hit harder than single payments, as the parentless rule implies.** Payments were included as sent at all three offers. A family has one ready transaction at a time. That fits a slow floor whose head sits waiting (the waiting column in the step files) while payments at 150 keep landing.
+- **Same fee, different path.** Triple and triple-pub have the same weight. Triple-pub was faster at every step and landed 955 hops against 888 over the run. The rule does not explain that difference; the node path may. The gap is smaller than in pre-run 9, where both 300 cohorts were uncongested at HOLD-1.
+- **What the rule does not cover here.** Funding coins were not one size, the mempool's feerate uses normalised mass, and some miners may not run this rusty-kaspa version. The fee is not called the whole cause. We did not establish why HOLD-1 in this run already looked congested for the cheap tiers.

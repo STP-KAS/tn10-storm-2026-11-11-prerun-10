@@ -53,6 +53,16 @@ Rehearsal A (p10-a), 2026-11-12 06:58:06Z to 07:20:59Z (desk, Brussels 07:58 to 
 - The rate fell to 1,013 at 07:10:12Z as HOLD-3 was scored (`MEASURED_END`). HOLD-4 pinned 07:14Z and ran at 1,013 (`OBSERVATION`, 60,891 submit-OK). RETURN `MET` (60,739 / 60,642 / 60,923). The runner published `counts/chain/TIMELINE.md` and `logs/METHOD.md` (with the "our own TN10 testing" line) and exited 0. No rehearsal process was left running.
 - What the rehearsal did not exercise: the counter logged no `REORG` line, as in pre-runs 8 and 9's rehearsals; the removal path is unchanged. The stand-in lands hops by its own rule, so its cohort numbers are not a network result. Mini's classify fix was checked by its own offline tests (on the box and on Mini), not in this rehearsal.
 
+## Status after the live run
+
+Read on 2026-11-12 between 07:53Z and 08:04Z. Not a gate.
+
+- Desk: the runner (started 07:25:43Z) ran HOLD-1 to RETURN without a repair or a restart and ended at 07:53:38Z after publishing `counts/chain/TIMELINE.md` and `logs/METHOD.md`. Its counter, family sender, coordinator, broker and six payment senders exited with it. The private TN10 kaspad was not stopped and is still up, synced. No devnet, `KaspaPublicNode` or miner was started.
+- Mini: the runner (MINI-ARMED 07:24:55Z) published a second read for every step and ended at 08:03:49Z after its 15-minute tail. Its TN10 kaspad was not wiped.
+- Bot: the waiter read HOLD-3 on origin, pinned 07:43Z, found no free node at 07:42:30Z, and published `NO SEND no-free-node` (17ab4f8). The waiter and its finish step exited. Nothing was sent by the bot.
+- Lane and pile after the run: lane 5,526 coins, 239,622 usable tKAS, above the abort line, read by status.mjs at 08:00:37Z (5,526 coins and 245,207 usable tKAS at the preflight); payment key 8,400 coins (188,079.03 tKAS at the end snapshots). Keys 1–15 have no genesis coin left; a next repo funds them again.
+- No `FAILED` file was written. Results: [logs/LESSONS.md](logs/LESSONS.md), [logs/METHOD.md](logs/METHOD.md), and the pre-run 10 block in [locks/LOCKED.md](locks/LOCKED.md).
+
 ## When something breaks
 
 Append a worked fix to [locks/LOCKED.md](locks/LOCKED.md) in the form that page shows, and a repair line to `logs/FIXES.md`. If the run dies before RETURN, write `logs/FAILED.md`, stop every runner, waiter, and counter, and do not resume. The next attempt is a new repo that starts from this repo's lock file.
