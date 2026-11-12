@@ -46,7 +46,12 @@ Not a gate. A status line, so nobody guesses. Read on 2026-11-12 between 06:52Z 
 
 ## Offline rehearsal, recorded before `PRE-RUN-OPEN`
 
-Rehearsal A (p10-a) is running on the desk while this repo opens. Its result is recorded here before `PRE-RUN-OPEN`; the desk does not open without it.
+Rehearsal A (p10-a), 2026-11-12 06:58:06Z to 07:20:59Z (desk, Brussels 07:58 to 08:21). The real pre-run 10 desk runner, counter, payment sender and the rehearsal family sender ran against pre-run 9's stand-in node on the desk, with a local bare origin. The stand-in accepted at most about 2,000 transactions a second on chain (so HOLD-2 at 1,500 and HOLD-3 at 1,800 were both under it), carried other traffic, let the desk view fall behind for 100 s inside HOLD-2, and was set to replace one chain block after 420 s. Nothing was sent to the network. Short times: 2-minute tail.
+
+- Preflight kept two unique kaspads (one candidate was the same kaspad as another). `FAMILY_PUBLIC_MAP 11:public-1,12:public-5,13:public-1`. `FEE_SPLIT` and every submit row's rate and path were checked: floor 100, double 200, triple 300 and high 1000 on the desk node, triple-pub 300 on the public nodes. 16 families attempting. Pile 8,400 dealt 1,400 to each of six senders.
+- HOLD-1 `MET` (60,753 / 60,773 / 60,882 submit-OK). HOLD-2 at 1,500 `MET` (90,157 / 89,700 / 90,116 submit-OK, included within 10 percent in 3 of 3 minutes); all three minutes marked `LAGGING` because of the planned desk-view lag, and the file said so. HOLD-3 at 1,800 `MET` (107,841 / 108,170 / 108,263; included 108,153 / 107,723 / 108,393, kept pace).
+- The rate fell to 1,013 at 07:10:12Z as HOLD-3 was scored (`MEASURED_END`). HOLD-4 pinned 07:14Z and ran at 1,013 (`OBSERVATION`, 60,891 submit-OK). RETURN `MET` (60,739 / 60,642 / 60,923). The runner published `counts/chain/TIMELINE.md` and `logs/METHOD.md` (with the "our own TN10 testing" line) and exited 0. No rehearsal process was left running.
+- What the rehearsal did not exercise: the counter logged no `REORG` line, as in pre-runs 8 and 9's rehearsals; the removal path is unchanged. The stand-in lands hops by its own rule, so its cohort numbers are not a network result. Mini's classify fix was checked by its own offline tests (on the box and on Mini), not in this rehearsal.
 
 ## When something breaks
 
